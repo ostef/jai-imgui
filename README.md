@@ -1,10 +1,10 @@
 # Dear ImGui for Jai
-**Dear ImGui** wrapper for the [Jai](https://youtu.be/TH9VCN6UkyQ) programming language.
+[Dear ImGui](https://github.com/ocornut/imgui) wrapper for the [Jai](https://youtu.be/TH9VCN6UkyQ) programming language.
 
 ## Disclaimer
 **The Jai programming language is still in closed beta as of December 27 2020.**
 
-A **Dear ImGui** module is provided with the Jai compiler at the moment but it uses version 1.58 and is incomplete.
+An **ImGui** module is provided with the Jai compiler at the moment but it uses version 1.58 and is incomplete.
 
 The library currently uses a **dll**, which is not necessarily the best choice so we'll eventually change it to link statically if possible. 
 
@@ -12,7 +12,7 @@ The library currently uses a **dll**, which is not necessarily the best choice s
 Currently, only Windows is supported.
 
 ## Dependencies
-This library is currently dependant on my [linear algebra module](https://github.com/ostef/jai-modules) for Vec2 and Vec4 as well as the Basic an Math modules provided with the Jai compiler.
+This library is currently dependant on my [linear algebra module](https://github.com/ostef/jai-modules) for `Vec2` and `Vec4` as well as the `Basic` an `Math` modules provided with the Jai compiler.
 
 ## Naming
 We try to make using the library in Jai as close as possible as using it in C++:
