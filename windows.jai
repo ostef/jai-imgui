@@ -819,7 +819,6 @@ ImGui_MemFree :: (ptr : *void) #foreign imgui "?MemFree@ImGui@@YAXPEAX@Z";
 //    ImGuiStyle member functions
 // ====================================
 
-//IMGUI_API void ScaleAllSizes(float scale_factor);
 ImGuiStyle_ScaleAllSizes :: (this : *ImGuiStyle, scale_factor : float) #foreign imgui "?ScaleAllSizes@ImGuiStyle@@QEAAXM@Z";
 
 // ====================================
@@ -839,9 +838,7 @@ ImGuiIO_ClearInputCharacters :: (this : *ImGuiIO) #foreign imgui "?ClearInputCha
 // ImGuiInputTextCallbackData member functions
 // =============================================
 
-//IMGUI_API void      DeleteChars(int pos, int bytes_count);
 ImGuiInputTextCallbackData_DeleteChars :: (this : *ImGuiInputTextCallbackData, pos : s32, bytes_count : s32) #foreign imgui "?DeleteChars@ImGuiInputTextCallbackData@@QEAAXHH@Z";
-//IMGUI_API void      InsertChars(int pos, const char* text, const char* text_end = NULL);
 ImGuiInputTextCallbackData_InsertChars :: (this : *ImGuiInputTextCallbackData, pos : s32, text : *u8, text_end : *u8 = null) #foreign imgui "?InsertChars@ImGuiInputTextCallbackData@@QEAAXHPEBD0@Z";
 //void                SelectAll()             { SelectionStart = 0; SelectionEnd = BufTextLen; }
 //void                ClearSelection()        { SelectionStart = SelectionEnd = BufTextLen; }
@@ -860,11 +857,9 @@ ImGuiInputTextCallbackData_InsertChars :: (this : *ImGuiInputTextCallbackData, p
 //       ImGuiTextFilter member functions
 // =============================================
 
-//IMGUI_API bool      Draw(const char* label = "Filter (inc,-exc)", float width = 0.0f);  // Helper calling InputText+Build
+// Helper calling InputText+Build
 ImGuiTextFilter_Draw :: (this : *ImGuiTextFilter, label : *u8 = "Filter (inc,-exc)", width : float = 0) -> bool #foreign imgui "?Draw@ImGuiTextFilter@@QEAA_NPEBDM@Z";
-//IMGUI_API bool      PassFilter(const char* text, const char* text_end = NULL) const;
 ImGuiTextFilter_PassFilter :: (this : *ImGuiTextFilter, text : *u8, text_end : *u8 = null) -> bool #foreign imgui "?PassFilter@ImGuiTextFilter@@QEBA_NPEBD0@Z";
-//IMGUI_API void      Build();
 ImGuiTextFilter_Build :: (this : *ImGuiTextFilter) #foreign imgui "?Build@ImGuiTextFilter@@QEAAXXZ";
 //void                Clear()          { InputBuf[0] = 0; Build(); }
 //bool                IsActive() const { return !Filters.empty(); }
@@ -873,11 +868,11 @@ ImGuiTextFilter_Build :: (this : *ImGuiTextFilter) #foreign imgui "?Build@ImGuiT
 //       ImGuiListClipper member functions
 // =============================================
 
-//IMGUI_API void Begin(int items_count, float items_height = -1.0f);  // Automatically called by constructor if you passed 'items_count' or by Step() in Step 1.
+// Automatically called by constructor if you passed 'items_count' or by Step() in Step 1.
 ImGuiListClipper_Begin :: (this : *ImGuiListClipper, items_count : s32, items_height : float = -1) #foreign imgui "?Begin@ImGuiListClipper@@QEAAXHM@Z";
-//IMGUI_API void End();                                               // Automatically called on the last call of Step() that returns false.
+// Automatically called on the last call of Step() that returns false.
 ImGuiListCLipper_End :: (this : *ImGuiListClipper) #foreign imgui "?End@ImGuiListClipper@@QEAAXXZ";
-//IMGUI_API bool Step();                                              // Call until it returns false. The DisplayStart/DisplayEnd fields will be set and you can process/draw those items.
+// Call until it returns false. The DisplayStart/DisplayEnd fields will be set and you can process/draw those items.
 ImGuiListClipper_Step :: (this : *ImGuiListClipper) -> bool #foreign imgui "?Step@ImGuiListClipper@@QEAA_NXZ";
 
 // =============================================
@@ -885,28 +880,20 @@ ImGuiListClipper_Step :: (this : *ImGuiListClipper) -> bool #foreign imgui "?Ste
 // =============================================
 
 //inline void                 Clear() { _Current = 0; _Count = 1; } // Do not clear Channels[] so our allocations are reused next frame
-//IMGUI_API void              ClearFreeMemory();
 ImDrawListSplitter_ClearFreeMemory :: (this : *ImDrawListSplitter) #foreign imgui "?ClearFreeMemory@ImDrawListSplitter@@QEAAXXZ";
-//IMGUI_API void              Split(ImDrawList* draw_list, int count);
 ImDrawListSpliiter_Split :: (this : *ImDrawListSplitter, draw_list : *ImDrawList, count : s32) #foreign imgui "?Split@ImDrawListSplitter@@QEAAXPEAUImDrawList@@H@Z";
-//IMGUI_API void              Merge(ImDrawList* draw_list);
 ImDrawListSplitter_Merge :: (this : *ImDrawListSplitter, draw_list : *ImDrawList) #foreign imgui "?Merge@ImDrawListSplitter@@QEAAXPEAUImDrawList@@@Z";
-//IMGUI_API void              SetCurrentChannel(ImDrawList* draw_list, int channel_idx);
 ImDrawListSplitter_SetCurrentChannel :: (this : *ImDrawListSplitter, draw_list : *ImDrawList, channel_idx : s32) #foreign imgui "?SetCurrentChannel@ImDrawListSplitter@@QEAAXPEAUImDrawList@@H@Z";
 
 // =============================================
 //         ImDrawList member functions
 // =============================================
 
-//IMGUI_API void  PushClipRect(ImVec2 clip_rect_min, ImVec2 clip_rect_max, bool intersect_with_current_clip_rect = false);  // Render-level scissoring. This is passed down to your render function but not used for CPU-side coarse clipping. Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
+// Render-level scissoring. This is passed down to your render function but not used for CPU-side coarse clipping. Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
 ImDrawList_PushClipRect :: (this : *ImDrawList, clip_rect_min : ImVec2, clip_rect_max : ImVec2, intersect_with_current_clip_rect : bool = false) #foreign imgui "?PushClipRect@ImDrawList@@QEAAXUImVec2@@0_N@Z";
-//IMGUI_API void  PushClipRectFullScreen();
 ImDrawList_PushClipRectFullscreen :: (this : *ImDrawList) #foreign imgui "?PushClipRectFullScreen@ImDrawList@@QEAAXXZ";
-//IMGUI_API void  PopClipRect();
 ImDrawList_PopClipRect :: (this : *ImDrawList) #foreign imgui "?PopClipRect@ImDrawList@@QEAAXXZ";
-//IMGUI_API void  PushTextureID(ImTextureID texture_id);
 ImDrawList_PushTextureID :: (this : *ImDrawList, texture_id : ImTextureID) #foreign imgui "?PushTextureID@ImDrawList@@QEAAXPEAX@Z";
-//IMGUI_API void  PopTextureID();
 ImDrawList_PopTextureID :: (this : *ImDrawList) #foreign imgui "?PopTextureID@ImDrawList@@QEAAXXZ";
 //inline ImVec2   GetClipRectMin() const { const ImVec4& cr = _ClipRectStack.back(); return ImVec2(cr.x, cr.y); }
 //inline ImVec2   GetClipRectMax() const { const ImVec4& cr = _ClipRectStack.back(); return ImVec2(cr.z, cr.w); }
@@ -917,39 +904,24 @@ ImDrawList_PopTextureID :: (this : *ImDrawList) #foreign imgui "?PopTextureID@Im
 //   In older versions (until Dear ImGui 1.77) the AddCircle functions defaulted to num_segments == 12.
 //   In future versions we will use textures to provide cheaper and higher-quality circles.
 //   Use AddNgon() and AddNgonFilled() functions if you need to guaranteed a specific number of sides.
-//IMGUI_API void  AddLine(const ImVec2& p1, const ImVec2& p2, ImU32 col, float thickness = 1.0f);
 ImDrawList_AddLine :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, col : u32, thickness : float = 1) { ImDrawList__AddLine (this, *p1, *p2, col, thickness); }
-//IMGUI_API void  AddRect(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All, float thickness = 1.0f);   // a: upper-left, b: lower-right (== upper-left + size), rounding_corners_flags: 4 bits corresponding to which corner to round
+// a: upper-left, b: lower-right (== upper-left + size), rounding_corners_flags: 4 bits corresponding to which corner to round
 ImDrawList_AddRect :: inline (this : *ImDrawList, p_min : ImVec2, p_max : ImVec2, col : u32, rounding : float = 0, rounding_corners : ImDrawCornerFlags = .All, thickness : float = 1) { ImDrawList__AddRect (this, *p_min, *p_max, col, rounding, rounding_corners, thickness); }
-//IMGUI_API void  AddRectFilled(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);                     // a: upper-left, b: lower-right (== upper-left + size)
+// a: upper-left, b: lower-right (== upper-left + size)
 ImDrawList_AddRectFilled :: inline (this : *ImDrawList, p_min : ImVec2, p_max : ImVec2, col : u32, rounding : float = 0, rounding_corners : ImDrawCornerFlags = .All) { ImDrawList__AddRectFilled (this, *p_min, *p_max, col, rounding, rounding_corners); }
-//IMGUI_API void  AddRectFilledMultiColor(const ImVec2& p_min, const ImVec2& p_max, ImU32 col_upr_left, ImU32 col_upr_right, ImU32 col_bot_right, ImU32 col_bot_left);
 ImDrawList_AddRectFilledMultiColor :: inline (this : *ImDrawList, p_min : ImVec2, p_max : ImVec2, col_upr_left : u32, col_upr_right : u32, col_bot_right : u32, col_bot_left : u32) { ImDrawList__AddRectFilledMultiColor (this, *p_min, *p_max, col_upr_left, col_upr_right, col_bot_right, col_bot_left); }
-//IMGUI_API void  AddQuad(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col, float thickness = 1.0f);
 ImDrawList_AddQuad :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, p4 : ImVec2, col : u32, thickness : float = 1) { ImDrawList__AddQuad (this, *p1, *p2, *p3, *p4, col, thickness); }
-//IMGUI_API void  AddQuadFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col);
 ImDrawList_AddQuadFilled :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, p4 : ImVec2, col : u32) { ImDrawList__AddQuadFilled (this, *p1, *p2, *p3, *p4, col); }
-//IMGUI_API void  AddTriangle(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col, float thickness = 1.0f);
 ImDrawList_AddTriangle :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, col : u32, thickness : float = 1) { ImDrawList__AddTriangle (this, *p1, *p2, *p3, col, thickness); }
-//IMGUI_API void  AddTriangleFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col);
 ImDrawList_AddTriangleFilled :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, col : u32) { ImDrawList__AddTriangleFilled (this, *p1, *p2, *p3, col); }
-//IMGUI_API void  AddCircle(const ImVec2& center, float radius, ImU32 col, int num_segments = 0, float thickness = 1.0f);
 ImDrawList_AddCircle :: inline (this : *ImDrawList, center : ImVec2, radius : float, col :u32, num_segments : s32 = 0, thickness : float = 1) { ImDrawList__AddCircle (this, *center, radius, col, num_segments, thickness); }
-//IMGUI_API void  AddCircleFilled(const ImVec2& center, float radius, ImU32 col, int num_segments = 0);
 ImDrawList_AddCircleFilled :: inline (this : *ImDrawList, center : ImVec2, radius : float, col :u32, num_segments : s32 = 0) { ImDrawList__AddCircleFilled (this, *center, radius, col, num_segments); }
-//IMGUI_API void  AddNgon(const ImVec2& center, float radius, ImU32 col, int num_segments, float thickness = 1.0f);
 ImDrawList_AddNgon :: inline (this : *ImDrawList, center : ImVec2, radius : float, col :u32, num_segments : s32, thickness : float = 1) { ImDrawList__AddNgon (this, *center, radius, col, num_segments, thickness); }
-//IMGUI_API void  AddNgonFilled(const ImVec2& center, float radius, ImU32 col, int num_segments);
 ImDrawList_AddNgonFilled :: inline (this : *ImDrawList, center : ImVec2, radius : float, col :u32, num_segments : s32) { ImDrawList__AddNgonFilled (this, *center, radius, col, num_segments); }
-//IMGUI_API void  AddText(const ImVec2& pos, ImU32 col, const char* text_begin, const char* text_end = NULL);
 ImDrawList_AddText :: inline (this : *ImDrawList, pos : ImVec2, col : u32, text_begin : *u8, text_end : *u8 = null) { ImDrawList__AddText (this, *pos, col, text_begin, text_end); }
-//IMGUI_API void  AddText(const ImFont* font, float font_size, const ImVec2& pos, ImU32 col, const char* text_begin, const char* text_end = NULL, float wrap_width = 0.0f, const ImVec4* cpu_fine_clip_rect = NULL);
 ImDrawList_AddText :: inline (this : *ImDrawList, font : *ImFont, font_size : float, pos : ImVec2, col : u32, text_begin : *u8, text_end : *u8 = null, wrap_width : float = 0, cpu_fine_clip_rect : *ImVec4 = null) { ImDrawList__AddText (this, font, font_size, *pos, col, text_begin, text_end, wrap_width, cpu_fine_clip_rect); }
-//IMGUI_API void  AddPolyline(const ImVec2* points, int num_points, ImU32 col, bool closed, float thickness);
 ImDrawList_AddPolyLine :: inline (this : *ImDrawList, points : []ImVec2, col : u32, closed : bool, thickness : float) { ImDrawList__AddPolyLine (this, points.data, xx points.count, col, closed, thickness); }
-//IMGUI_API void  AddConvexPolyFilled(const ImVec2* points, int num_points, ImU32 col); // Note: Anti-aliased filling requires points to be in clockwise order.
 ImDrawList_AddConvexPolyFilled :: inline (this : *ImDrawList, points : []ImVec2, col : u32) { ImDrawList__AddConvexPolyFilled (this, points.data, xx points.count, col); }
-//IMGUI_API void  AddBezierCurve(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col, float thickness, int num_segments = 0);
 ImDrawList_AddBezierCurve :: inline (this : *ImDrawList, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, p4 : ImVec2, col : u32, thickness : float, num_segments : s32 = 0) { ImDrawList__AddBezierCurve (this, *p1, *p2, *p3, *p4, col, thickness, num_segments); }
 
 ImDrawList__AddLine :: (this : *ImDrawList, const_ref_p1 : *ImVec2, const_ref_p2 : *ImVec2, col : u32, thickness : float) #foreign imgui "?AddLine@ImDrawList@@QEAAXAEBUImVec2@@0IM@Z";
@@ -974,11 +946,8 @@ ImDrawList__AddBezierCurve :: (this : *ImDrawList, const_ref_p1 : *ImVec2, const
 // - Read FAQ to understand what ImTextureID is.
 // - "p_min" and "p_max" represent the upper-left and lower-right corners of the rectangle.
 // - "uv_min" and "uv_max" represent the normalized texture coordinates to use for those corners. Using (0,0)->(1,1) texture coordinates will generally display the entire texture.
-//IMGUI_API void  AddImage(ImTextureID user_texture_id, const ImVec2& p_min, const ImVec2& p_max, const ImVec2& uv_min = ImVec2(0, 0), const ImVec2& uv_max = ImVec2(1, 1), ImU32 col = IM_COL32_WHITE);
 ImDrawList_AddImage :: inline (this : *ImDrawList, user_texture_id : ImTextureID, p_min : ImVec2, p_max : ImVec2, uv_min : ImVec2 = .{ 0, 0 }, uv_max : ImVec2 = .{ 1, 1 }, col : u32 = 0xffff_ffff) { ImDrawList__AddImage (this, user_texture_id, *p_min, *p_max, *uv_min, *uv_max, col); }
-//IMGUI_API void  AddImageQuad(ImTextureID user_texture_id, const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& uv1 = ImVec2(0, 0), const ImVec2& uv2 = ImVec2(1, 0), const ImVec2& uv3 = ImVec2(1, 1), const ImVec2& uv4 = ImVec2(0, 1), ImU32 col = IM_COL32_WHITE);
 ImDrawList_AddImageQuad :: inline (this : *ImDrawList, user_texture_id : ImTextureID, p1 : ImVec2, p2 : ImVec2, p3 : ImVec2, p4 : ImVec2, uv1 : ImVec2 = .{ 0, 0 }, uv2 : ImVec2 = .{ 1, 0 }, uv3 : ImVec2 = .{ 1, 1 }, uv4 : ImVec2 = .{ 0, 1 }, col : u32 = 0xffff_ffff) { ImDrawList__AddImageQuad (this, user_texture_id, *p1, *p2, *p3, *p4, *uv1, *uv2, *uv3, *uv4, col); }
-//IMGUI_API void  AddImageRounded(ImTextureID user_texture_id, const ImVec2& p_min, const ImVec2& p_max, const ImVec2& uv_min, const ImVec2& uv_max, ImU32 col, float rounding, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);
 ImDrawList_AddImageRounded :: inline (this : *ImDrawList, user_texture_id : ImTextureID, p_min : ImVec2, p_max : ImVec2, uv_min : ImVec2, uv_max : ImVec2, col : u32, rounding : float, rounding_corners : ImDrawCornerFlags = .All) { ImDrawList__AddImageRounded (this, user_texture_id, *p_min, *p_max, *uv_min, *uv_max, col, rounding, rounding_corners); }
 
 ImDrawList__AddImage :: (this : *ImDrawList, user_texture_id : ImTextureID, const_ref_p_min : *ImVec2, const_ref_p_max : *ImVec2, const_ref_uv_min : *ImVec2, const_ref_uv_max : *ImVec2, col : u32) #foreign imgui "?AddImage@ImDrawList@@QEAAXPEAXAEBUImVec2@@111I@Z";
@@ -991,24 +960,24 @@ ImDrawList__AddImageRounded :: (this : *ImDrawList, user_texture_id : ImTextureI
 //inline    void  PathLineToMergeDuplicate(const ImVec2& pos)                 { if (_Path.Size == 0 || memcmp(&_Path.Data[_Path.Size - 1], &pos, 8) != 0) _Path.push_back(pos); }
 //inline    void  PathFillConvex(ImU32 col)                                   { AddConvexPolyFilled(_Path.Data, _Path.Size, col); _Path.Size = 0; }  // Note: Anti-aliased filling requires points to be in clockwise order.
 //inline    void  PathStroke(ImU32 col, bool closed, float thickness = 1.0f)  { AddPolyline(_Path.Data, _Path.Size, col, closed, thickness); _Path.Size = 0; }
-//IMGUI_API void  PathArcTo(const ImVec2& center, float radius, float a_min, float a_max, int num_segments = 10);
 ImDrawList_PathArcTo :: inline (this : *ImDrawList, center : ImVec2, radius : float, a_min : float, a_max : float, num_segments : s32 = 10) { ImDrawList__PathArcTo (this, *center, radius, a_min, a_max, num_segments); }
-//IMGUI_API void  PathArcToFast(const ImVec2& center, float radius, int a_min_of_12, int a_max_of_12);                                            // Use precomputed angles for a 12 steps circle
+// Use precomputed angles for a 12 steps circle
 ImDrawList_PathArcToFast :: inline (this : *ImDrawList, center : ImVec2, radius : float, a_min_of_12 : s32, a_max_of_12 : s32) { ImDrawList__PathArcToFast (this, *center, radius, a_min_of_12, a_max_of_12); }
-//IMGUI_API void  PathBezierCurveTo(const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, int num_segments = 0);
 ImDrawList_PathBezierCurveTo :: inline (this : *ImDrawList, p2 : ImVec2, p3 : ImVec2, p4 : ImVec4, num_segments : s32 = 0) { ImDrawList__PathBezierCurveTo (this, *p2, *p3, *p4, num_segments); }
 //IMGUI_API void  PathRect(const ImVec2& rect_min, const ImVec2& rect_max, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);
+ImDrawList_PathRect :: inline (this : *ImDrawList, rect_min : ImVec2, rect_max : ImVec2, rounding : float = 0, rounding_corners : ImDrawCornerFlags = .All) { ImDrawList__PathRect (this, *rect_min, *rect_max, rounding, rounding_corners); }
 
 ImDrawList__PathArcTo :: (this : *ImDrawList, const_ref_center : *ImVec2, radius : float, a_min : float, a_max : float, num_segments : s32) #foreign imgui "?PathArcTo@ImDrawList@@QEAAXAEBUImVec2@@MMMH@Z";
 ImDrawList__PathArcToFast :: (this : *ImDrawList, const_ref_center : *ImVec2, radius : float, a_min_of_12 : s32, a_max_of_12 : s32) #foreign imgui "?PathArcToFast@ImDrawList@@QEAAXAEBUImVec2@@MHH@Z";
 ImDrawList__PathBezierCurveTo :: (this : *ImDrawList, const_ref_p2 : *ImVec2, const_ref_p3 : *ImVec2, const_ref_p4 : *ImVec4, num_segments : s32) #foreign imgui "?PathBezierCurveTo@ImDrawList@@QEAAXAEBUImVec2@@00H@Z";
+ImDrawList__PathRect :: (this : *ImDrawList, const_ref_rect_min : *ImVec2, const_ref_rect_max : *ImVec2, rounding : float, rounding_corners : ImDrawCornerFlags) #foreign imgui "?PathRect@ImDrawList@@QEAAXAEBUImVec2@@0MH@Z";
 
 // Advanced
-//IMGUI_API void  AddCallback(ImDrawCallback callback, void* callback_data);  // Your rendering function must check for 'UserCallback' in ImDrawCmd and call the function instead of rendering triangles.
+// Your rendering function must check for 'UserCallback' in ImDrawCmd and call the function instead of rendering triangles.
 ImDrawList_AddCallback :: (this : *ImDrawList, callback : ImDrawCallback, callback_data : *void) #foreign imgui "?AddCallback@ImDrawList@@QEAAXP6AXPEBU1@PEBUImDrawCmd@@@ZPEAX@Z";
-//IMGUI_API void  AddDrawCmd();                                               // This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
+// This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
 ImDrawList_AddDrawCmd :: (this : *ImDrawList) #foreign imgui "?AddDrawCmd@ImDrawList@@QEAAXXZ";
-//IMGUI_API ImDrawList* CloneOutput() const;                                  // Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
+// Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
 ImDrawList_CloneOutput :: (this : *ImDrawList) -> *ImDrawList #foreign imgui "?CloneOutput@ImDrawList@@QEBAPEAU1@XZ";
 
 // Advanced: Channels
@@ -1024,15 +993,11 @@ ImDrawList_CloneOutput :: (this : *ImDrawList) -> *ImDrawList #foreign imgui "?C
 // Advanced: Primitives allocations
 // - We render triangles (three vertices)
 // - All primitives needs to be reserved via PrimReserve() beforehand.
-//IMGUI_API void  PrimReserve(int idx_count, int vtx_count);
 ImDrawList_PrimReserve :: (this : *ImDrawList, idx_count : s32, vtx_count : s32) #foreign imgui "?PrimReserve@ImDrawList@@QEAAXHH@Z";
-//IMGUI_API void  PrimUnreserve(int idx_count, int vtx_count);
 ImDrawList_PrimUnreserve :: (this : *ImDrawList, idx_count : s32, vtx_count : s32) #foreign imgui "?PrimUnreserve@ImDrawList@@QEAAXHH@Z";
-//IMGUI_API void  PrimRect(const ImVec2& a, const ImVec2& b, ImU32 col);      // Axis aligned rectangle (composed of two triangles)
+// Axis aligned rectangle (composed of two triangles)
 ImDrawList_PrimRect :: inline (this : *ImDrawList, a : ImVec2, b : ImVec2, col : u32) { ImDrawList__PrimRect (this, *a, *b, col); }
-//IMGUI_API void  PrimRectUV(const ImVec2& a, const ImVec2& b, const ImVec2& uv_a, const ImVec2& uv_b, ImU32 col);
 ImDrawList_PrimRectUV :: inline (this : *ImDrawList, a : ImVec2, b : ImVec2, uv_a : ImVec2, uv_b : ImVec2, col : u32) { ImDrawList__PrimRectUV (this, *a, *b, *uv_a, *uv_b, col); }
-//IMGUI_API void  PrimQuadUV(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& d, const ImVec2& uv_a, const ImVec2& uv_b, const ImVec2& uv_c, const ImVec2& uv_d, ImU32 col);
 ImDrawList_PrimQuadUV :: inline (this : *ImDrawList, a : ImVec2, b : ImVec2, c : ImVec2, d : ImVec2, uv_a : ImVec2, uv_b : ImVec2, uv_c : ImVec2, uv_d : ImVec2, col : u32) { ImDrawList__PrimQuadUV (this, *a, *b, *c, *d, *uv_a, *uv_b, *uv_c, *uv_d, col); }
 //inline    void  PrimWriteVtx(const ImVec2& pos, const ImVec2& uv, ImU32 col)    { _VtxWritePtr->pos = pos; _VtxWritePtr->uv = uv; _VtxWritePtr->col = col; _VtxWritePtr++; _VtxCurrentIdx++; }
 //inline    void  PrimWriteIdx(ImDrawIdx idx)                                     { *_IdxWritePtr = idx; _IdxWritePtr++; }
@@ -1055,9 +1020,9 @@ ImDrawList__PrimQuadUV :: (this : *ImDrawList, const_ref_a : *ImVec2, const_ref_
 // ====================================
 
 //void Clear()    { Valid = false; CmdLists = NULL; CmdListsCount = TotalVtxCount = TotalIdxCount = 0; DisplayPos = DisplaySize = FramebufferScale = ImVec2(0.f, 0.f); } // The ImDrawList are owned by ImGuiContext!
-//IMGUI_API void  DeIndexAllBuffers();                    // Helper to convert all buffers from indexed to non-indexed, in case you cannot render indexed. Note: this is slow and most likely a waste of resources. Always prefer indexed rendering!
+// Helper to convert all buffers from indexed to non-indexed, in case you cannot render indexed. Note: this is slow and most likely a waste of resources. Always prefer indexed rendering!
 ImDrawData_DeIndexAllBuffer :: (this : *ImDrawData) #foreign imgui "?DeIndexAllBuffers@ImDrawData@@QEAAXXZ";
-//IMGUI_API void  ScaleClipRects(const ImVec2& fb_scale); // Helper to scale the ClipRect field of each ImDrawCmd. Use if your final output buffer is at a different scale than Dear ImGui expects, or if there is a difference between your window resolution and framebuffer resolution.
+// Helper to scale the ClipRect field of each ImDrawCmd. Use if your final output buffer is at a different scale than Dear ImGui expects, or if there is a difference between your window resolution and framebuffer resolution.
 ImDrawData_ScaleClipRects :: inline (this : *ImDrawData, fb_scale : ImVec2) { ImDrawData__ScaleClipRects (this, *fb_scale); }
 
 ImDrawData__ScaleClipRects :: (this : *ImDrawData, const_ref_fb_scale : *ImVec2) #foreign imgui "?ScaleClipRects@ImDrawData@@QEAAXAEBUImVec2@@@Z";
@@ -1070,36 +1035,33 @@ ImDrawData__ScaleClipRects :: (this : *ImDrawData, const_ref_fb_scale : *ImVec2)
 //inline bool     GetBit(size_t n) const  { int off = (int)(n >> 5); ImU32 mask = 1u << (n & 31); return (UsedChars[off] & mask) != 0; }  // Get bit n in the array
 //inline void     SetBit(size_t n)        { int off = (int)(n >> 5); ImU32 mask = 1u << (n & 31); UsedChars[off] |= mask; }               // Set bit n in the array
 //inline void     AddChar(ImWchar c)      { SetBit(c); }                      // Add character
-//IMGUI_API void  AddText(const char* text, const char* text_end = NULL);     // Add string (each character of the UTF-8 string are added)
+// Add string (each character of the UTF-8 string are added)
 ImFontGlyphRangesBuilder_AddText :: (this : *ImFontGlyphRangesBuilder, text : *u8, text_end : *u8 = null) #foreign imgui "?AddText@ImFontGlyphRangesBuilder@@QEAAXPEBD0@Z";
-//IMGUI_API void  AddRanges(const ImWchar* ranges);                           // Add ranges, e.g. builder.AddRanges(ImFontAtlas::GetGlyphRangesDefault()) to force add all of ASCII/Latin+Ext
+// Add ranges, e.g. builder.AddRanges(ImFontAtlas::GetGlyphRangesDefault()) to force add all of ASCII/Latin+Ext
 ImFontGlyphRangesBuilder_AddRanges :: (this : *ImFontGlyphRangesBuilder, ranges : *ImWchar) #foreign imgui "?AddRanges@ImFontGlyphRangesBuilder@@QEAAXPEBG@Z";
-//IMGUI_API void  BuildRanges(ImVector<ImWchar>* out_ranges);                 // Output new ranges
+// Output new ranges
 ImFontGlyphRangesBuilder_BuildRanges :: (this : *ImFontGlyphRangesBuilder, out_ranges : *ImVector (ImWchar)) #foreign imgui "?BuildRanges@ImFontGlyphRangesBuilder@@QEAAXPEAU?$ImVector@G@@@Z";
 
 // =============================================
 //         ImFontAtlas member functions
 // =============================================
 
-//IMGUI_API ImFont*           AddFont(const ImFontConfig* font_cfg);
 ImFontAtlas_AddFont :: (this : *ImFontAtlas, font_cfg : *ImFontConfig) -> *ImFont #foreign imgui "?AddFont@ImFontAtlas@@QEAAPEAUImFont@@PEBUImFontConfig@@@Z";
-//IMGUI_API ImFont*           AddFontDefault(const ImFontConfig* font_cfg = NULL);
 ImFontAtlas_AddFontDefault :: (this : *ImFontAtlas, font_cfg : *ImFontConfig = null) -> *ImFont #foreign imgui "?AddFontDefault@ImFontAtlas@@QEAAPEAUImFont@@PEBUImFontConfig@@@Z";
-//IMGUI_API ImFont*           AddFontFromFileTTF(const char* filename, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);
 ImFontAtlas_AddFontFromFileTTF :: (this : *ImFontAtlas, filename : *u8, size_pixels : float, font_cfg : *ImFontConfig = null, glyph_ranges : *ImWchar = null) -> *ImFont #foreign imgui "?AddFontFromFileTTF@ImFontAtlas@@QEAAPEAUImFont@@PEBDMPEBUImFontConfig@@PEBG@Z";
-//IMGUI_API ImFont*           AddFontFromMemoryTTF(void* font_data, int font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
+// Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
 ImFontAtlas_AddFontFromMemoryTTF :: (this : *ImFontAtlas, font_data : *void, font_size : s32, size_pixels : float, font_cfg : *ImFontConfig = null, glyph_ranges : *ImWchar = null) -> *ImFont #foreign imgui "?AddFontFromMemoryTTF@ImFontAtlas@@QEAAPEAUImFont@@PEAXHMPEBUImFontConfig@@PEBG@Z";
-//IMGUI_API ImFont*           AddFontFromMemoryCompressedTTF(const void* compressed_font_data, int compressed_font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
+// 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
 ImFontAtlas_AddFontFromMemoryCompressedTTF :: (this : *ImFontAtlas, compressed_font_data : *void, compressed_font_size : s32, size_pixels : float, font_cfg : *ImFontConfig = null, glyph_ranges : *ImWchar = null) -> *ImFont #foreign imgui "?AddFontFromMemoryCompressedTTF@ImFontAtlas@@QEAAPEAUImFont@@PEBXHMPEBUImFontConfig@@PEBG@Z";
-//IMGUI_API ImFont*           AddFontFromMemoryCompressedBase85TTF(const char* compressed_font_data_base85, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);              // 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
+// 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
 ImFontAtlas_AddFontFromMemoryCompressedBase85TTF :: (this : *ImFontAtlas, compressed_font_data_base85 : *u8, size_pixels : float, font_cfg : *ImFontConfig = null, glyph_ranges : *ImWchar = null) -> *ImFont #foreign imgui "?AddFontFromMemoryCompressedBase85TTF@ImFontAtlas@@QEAAPEAUImFont@@PEBDMPEBUImFontConfig@@PEBG@Z";
-//IMGUI_API void              ClearInputData();           // Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
+// Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
 ImFontAtlas_ClearInputData :: (this : *ImFontAtlas) #foreign imgui "?ClearInputData@ImFontAtlas@@QEAAXXZ";
-//IMGUI_API void              ClearTexData();             // Clear output texture data (CPU side). Saves RAM once the texture has been copied to graphics memory.
+// Clear output texture data (CPU side). Saves RAM once the texture has been copied to graphics memory.
 ImFontAtlas_ClearTexData :: (this : *ImFontAtlas) #foreign imgui "?ClearTexData@ImFontAtlas@@QEAAXXZ";
-//IMGUI_API void              ClearFonts();               // Clear output font data (glyphs storage, UV coordinates).
+// Clear output font data (glyphs storage, UV coordinates).
 ImFontAtlas_ClearFonts :: (this : *ImFontAtlas) #foreign imgui "?ClearFonts@ImFontAtlas@@QEAAXXZ";
-//IMGUI_API void              Clear();                    // Clear all input and output.
+// Clear all input and output.
 ImFontAtlas_Clear :: (this : *ImFontAtlas) #foreign imgui "?Clear@ImFontAtlas@@QEAAXXZ";
 
 // Build atlas, retrieve pixel data.
@@ -1107,12 +1069,12 @@ ImFontAtlas_Clear :: (this : *ImFontAtlas) #foreign imgui "?Clear@ImFontAtlas@@Q
 // The pitch is always = Width * BytesPerPixels (1 or 4)
 // Building in RGBA32 format is provided for convenience and compatibility, but note that unless you manually manipulate or copy color data into
 // the texture (e.g. when using the AddCustomRect*** api), then the RGB pixels emitted will always be white (~75% of memory/bandwidth waste.
-//IMGUI_API bool              Build();                    // Build pixels data. This is called automatically for you by the GetTexData*** functions.
+// Build pixels data. This is called automatically for you by the GetTexData*** functions.
 ImFontAtlas_Build :: (this : *ImFontAtlas) -> bool #foreign imgui "?Build@ImFontAtlas@@QEAA_NXZ";
 
 // 1 byte per-pixel
 ImFontAtlas_GetTexDataAsAlpha8 :: (this : *ImFontAtlas, out_pixels : **u8, out_width : *s32, out_height : *s32, out_bytes_per_pixel : *s32 = null) #foreign imgui "?GetTexDataAsAlpha8@ImFontAtlas@@QEAAXPEAPEAEPEAH11@Z";
-//IMGUI_API void              GetTexDataAsRGBA32(unsigned char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel = NULL);  // 4 bytes-per-pixel
+// 4 bytes-per-pixel
 ImFontAtlas_GetTexDataAsRGBA32 :: (this : *ImFontAtlas, out_pixels : **u8, out_width : *s32, out_height : *s32, out_bytes_per_pixel : *s32 = null) #foreign imgui "?GetTexDataAsRGBA32@ImFontAtlas@@QEAAXPEAPEAEPEAH11@Z";
 //bool                        IsBuilt() const             { return Fonts.Size > 0 && (TexPixelsAlpha8 != NULL || TexPixelsRGBA32 != NULL); }
 //void                        SetTexID(ImTextureID id)    { TexID = id; }
@@ -1124,21 +1086,21 @@ ImFontAtlas_GetTexDataAsRGBA32 :: (this : *ImFontAtlas, out_pixels : **u8, out_w
 // Helpers to retrieve list of common Unicode ranges (2 value per range, values are inclusive, zero-terminated list)
 // NB: Make sure that your string are UTF-8 and NOT in your local code page. In C++11, you can create UTF-8 string literal using the u8"Hello world" syntax. See FAQ for details.
 // NB: Consider using ImFontGlyphRangesBuilder to build glyph ranges from textual data.
-//IMGUI_API const ImWchar*    GetGlyphRangesDefault();                // Basic Latin, Extended Latin
+// Basic Latin, Extended Latin
 ImFontAtlas_GetGlyphRangesDefault :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesDefault@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesKorean();                 // Default + Korean characters
+// Default + Korean characters
 ImFontAtlas_GetGlyphRangesKorean :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesKorean@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesJapanese();               // Default + Hiragana, Katakana, Half-Width, Selection of 1946 Ideographs
+// Default + Hiragana, Katakana, Half-Width, Selection of 1946 Ideographs
 ImFontAtlas_GetGlyphRangesJapanese :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesJapanese@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesChineseFull();            // Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
+// Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
 ImFontAtlas_GetGlyphRangesChineseFull :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesChineseFull@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesChineseSimplifiedCommon();// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
+// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
 ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesChineseSimplifiedCommon@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesCyrillic();               // Default + about 400 Cyrillic characters
+// Default + about 400 Cyrillic characters
 ImFontAtlas_GetGlyphRangesCyrillic :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesCyrillic@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesThai();                   // Default + Thai characters
+// Default + Thai characters
 ImFontAtlas_GetGlyphRangesThai :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesThai@ImFontAtlas@@QEAAPEBGXZ";
-//IMGUI_API const ImWchar*    GetGlyphRangesVietnamese();             // Default + Vietnamese characters
+// Default + Vietnamese characters
 ImFontAtlas_GetGlyphRangesVietnamese :: (this : *ImFontAtlas) -> *ImWchar #foreign imgui "?GetGlyphRangesVietnamese@ImFontAtlas@@QEAAPEBGXZ";
 
 //-------------------------------------------
@@ -1151,9 +1113,7 @@ ImFontAtlas_GetGlyphRangesVietnamese :: (this : *ImFontAtlas) -> *ImWchar #forei
 // so you can render e.g. custom colorful icons and use them as regular glyphs.
 // Read docs/FONTS.md for more details about using colorful icons.
 // Note: this API may be redesigned later in order to support multi-monitor varying DPI settings.
-//IMGUI_API int               AddCustomRectRegular(int width, int height);
 ImFontAtlas_AddCustomRectRegular :: (this : *ImFontAtlas, width : s32, height : s32) -> s32 #foreign imgui "?AddCustomRectRegular@ImFontAtlas@@QEAAHHH@Z";
-//IMGUI_API int               AddCustomRectFontGlyph(ImFont* font, ImWchar id, int width, int height, float advance_x, const ImVec2& offset = ImVec2(0, 0));
 ImFontAtlas_AddCustomRectFontGlyph :: inline (this : *ImFontAtlas, width : s32, height : s32, advance_x : float, offset : ImVec2 = .{ 0, 0 }) -> s32 { return ImFontAtlas__AddCustomRectFontGlyph (this, width, height, advance_x, *offset); }
 //ImFontAtlasCustomRect*      GetCustomRectByIndex(int index) { IM_ASSERT(index >= 0); return &CustomRects[index]; }
 
@@ -1167,9 +1127,7 @@ ImFontAtlas__AddCustomRectFontGlyph :: (this : *ImFontAtlas, width : s32, height
 //           ImFont member functions
 // =============================================
 
-//IMGUI_API const ImFontGlyph*FindGlyph(ImWchar c) const;
 ImFont_FindGlyph :: (this : *ImFontGlyph, c : ImWchar) -> *ImFontGlyph #foreign imgui "?FindGlyph@ImFont@@QEBAPEBUImFontGlyph@@G@Z";
-//IMGUI_API const ImFontGlyph*FindGlyphNoFallback(ImWchar c) const;
 ImFont_FindGlyphNoFallback :: (this : *ImFontGlyph, c : ImWchar) -> *ImFontGlyph #foreign imgui "?FindGlyphNoFallback@ImFont@@QEBAPEBUImFontGlyph@@G@Z";
 //float                       GetCharAdvance(ImWchar c) const     { return ((int)c < IndexAdvanceX.Size) ? IndexAdvanceX[(int)c] : FallbackAdvanceX; }
 //bool                        IsLoaded() const                    { return ContainerAtlas != NULL; }
@@ -1177,13 +1135,10 @@ ImFont_FindGlyphNoFallback :: (this : *ImFontGlyph, c : ImWchar) -> *ImFontGlyph
 
 // 'max_width' stops rendering after a certain width (could be turned into a 2d size). FLT_MAX to disable.
 // 'wrap_width' enable automatic word-wrapping across multiple lines to fit into given width. 0.0f to disable.
-//IMGUI_API ImVec2            CalcTextSizeA(float size, float max_width, float wrap_width, const char* text_begin, const char* text_end = NULL, const char** remaining = NULL) const; // utf8
+// utf8
 ImFont_CalcTextSizeA :: (this : *ImFont, size : float, max_width : float, wrap_width : float, text_begin : *u8, text_end : *u8 = null, remaining : **u8 = null) -> ImVec2 #foreign imgui "?CalcTextSizeA@ImFont@@QEBA?AUImVec2@@MMMPEBD0PEAPEBD@Z";
-//IMGUI_API const char*       CalcWordWrapPositionA(float scale, const char* text, const char* text_end, float wrap_width) const;
 ImFont_CalcWordWrapPositionA :: (this : *ImFont, scale : float, text : *u8, text_end : *u8, wrap_width : float) -> *u8 #foreign imgui "?CalcTextSizeA@ImFont@@QEBA?AUImVec2@@MMMPEBD0PEAPEBD@Z";
-//IMGUI_API void              RenderChar(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col, ImWchar c) const;
 ImFont_RenderChar :: (this : *ImFont, draw_list : *ImDrawList, size : float, pos : ImVec2, col : u32, c : ImWchar) #foreign imgui "?RenderChar@ImFont@@QEBAXPEAUImDrawList@@MUImVec2@@IG@Z";
-//IMGUI_API void              RenderText(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col, const ImVec4& clip_rect, const char* text_begin, const char* text_end, float wrap_width = 0.0f, bool cpu_fine_clip = false) const;
 ImFont_RenderText :: (this : *ImFont, draw_list : *ImDrawList, size : float, pos : ImVec2, col : u32, clip_rect : ImVec2, text_begin : *u8, text_end : *u8, wrap_width : float = 0, cpu_fine_clip : bool = false) { ImFont__RenderText (this, draw_list, size, pos, col, *clip_rect, text_begin, text_end, wrap_width, cpu_fine_clip); }
 
 ImFont__RenderText :: (this : *ImFont, draw_list : *ImDrawList, size : float, pos : ImVec2, col : u32, const_ref_clip_rect : *ImVec2, text_begin : *u8, text_end : *u8, wrap_width : float, cpu_fine_clip : bool) #foreign imgui "?RenderText@ImFont@@QEBAXPEAUImDrawList@@MUImVec2@@IAEBUImVec4@@PEBD3M_N@Z";

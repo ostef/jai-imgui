@@ -70,10 +70,6 @@ ImGuiWindowFlags :: enum_flags s32
 	Popup                  :: 1 << 26;  // Don't use! For internal use by BeginPopup()
 	Modal                  :: 1 << 27;  // Don't use! For internal use by BeginPopupModal()
 	ChildMenu              :: 1 << 28;  // Don't use! For internal use by BeginMenu()
-
-	// [Obsolete]
-	//ShowBorders          :: 1 << 7;   // --> Set style.FrameBorderSize=1.0f or style.WindowBorderSize=1.0f to enable borders around items or windows.
-	//ResizeFromAnySide    :: 1 << 17;  // --> Set io.ConfigWindowsResizeFromEdges=true and make sure mouse cursors are supported by back-end (io.BackendFlags & ImGuiBackendFlags_HasMouseCursors)
 }
 
 ImGuiInputTextFlags :: enum_flags s32
@@ -607,9 +603,6 @@ ImGuiStyle :: struct
 	CurveTessellationTol : float;       // Tessellation tolerance when using PathBezierCurveTo() without a specific number of segments. Decrease for highly tessellated curves (higher quality, more polygons), increase to reduce quality.
 	CircleSegmentMaxError : float;      // Maximum error (in pixels) allowed when using AddCircle()/AddCircleFilled() or drawing rounded corner rectangles with no explicit segment count specified. Decrease for higher quality but more geometry.
 	Colors : [ImGuiCol.COUNT]ImVec4;
-
-	//IMGUI_API ImGuiStyle();
-	//IMGUI_API void ScaleAllSizes(float scale_factor);
 }
 
 //-----------------------------------------------------------------------------
@@ -773,15 +766,6 @@ ImGuiInputTextCallbackData :: struct
 	CursorPos : s32;      //                                      // Read-write   // [Completion,History,Always]
 	SelectionStart : s32; //                                      // Read-write   // [Completion,History,Always] == to SelectionEnd when no selection)
 	SelectionEnd : s32;   //                                      // Read-write   // [Completion,History,Always]
-
-	// Helper functions for text manipulation.
-	// Use those function to benefit from the CallbackResize behaviors. Calling those function reset the selection.
-	//IMGUI_API ImGuiInputTextCallbackData();
-	//IMGUI_API void      DeleteChars(int pos, int bytes_count);
-	//IMGUI_API void      InsertChars(int pos, const char* text, const char* text_end = NULL);
-	//void                SelectAll()             { SelectionStart = 0; SelectionEnd = BufTextLen; }
-	//void                ClearSelection()        { SelectionStart = SelectionEnd = BufTextLen; }
-	//bool                HasSelection() const    { return SelectionStart != SelectionEnd; }
 }
 
 // Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().
@@ -808,25 +792,11 @@ ImGuiPayload :: struct
 	DataType : [32 + 1]u8;   // Data type tag (short user-supplied string, 32 characters max)
 	Preview : bool;            // Set when AcceptDragDropPayload() was called and mouse has been hovering the target item (nb: handle overlapping drag targets)
 	Delivery : bool;           // Set when AcceptDragDropPayload() was called and mouse button is released over the target item.
-
-	//ImGuiPayload()  { Clear(); }
-	//void Clear()    { SourceId = SourceParentId = 0; Data = NULL; DataSize = 0; memset(DataType, 0, sizeof(DataType)); DataFrameCount = -1; Preview = Delivery = false; }
-	//bool IsDataType(const char* type) const { return DataFrameCount != -1 && strcmp(type, DataType) == 0; }
-	//bool IsPreview() const                  { return Preview; }
-	//bool IsDelivery() const                 { return Delivery; }
 }
 
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
-
-// Helper: Unicode defines
-//#define IM_UNICODE_CODEPOINT_INVALID 0xFFFD     // Invalid Unicode code point (standard value).
-//#ifdef IMGUI_USE_WCHAR32
-//#define IM_UNICODE_CODEPOINT_MAX     0x10FFFF   // Maximum Unicode code point supported by this build.
-//#else
-//#define IM_UNICODE_CODEPOINT_MAX     0xFFFF     // Maximum Unicode code point supported by this build.
-//#endif
 
 IM_UNICODE_CODEPOINT_MAX :: cast (u16) 0xffff;     // Maximum Unicode code point supported by this build.
 
@@ -835,7 +805,6 @@ IM_UNICODE_CODEPOINT_MAX :: cast (u16) 0xffff;     // Maximum Unicode code point
 ImGuiOnceUponAFrame :: struct
 {
 	RefFrame : s32 = -1;
-	//operator bool() const { int current_frame = ImGui::GetFrameCount(); if (RefFrame == current_frame) return false; RefFrame = current_frame; return true; }
 }
 
 once :: inline (using uoa : *ImGuiOnceUponAFrame) -> bool
@@ -850,23 +819,11 @@ once :: inline (using uoa : *ImGuiOnceUponAFrame) -> bool
 // Helper: Parse and apply text filters. In format "aaaaa[,bbbb][,ccccc]"
 ImGuiTextFilter :: struct
 {
-	//IMGUI_API           ImGuiTextFilter(const char* default_filter = "");
-	//IMGUI_API bool      Draw(const char* label = "Filter (inc,-exc)", float width = 0.0f);  // Helper calling InputText+Build
-	//IMGUI_API bool      PassFilter(const char* text, const char* text_end = NULL) const;
-	//IMGUI_API void      Build();
-	//void                Clear()          { InputBuf[0] = 0; Build(); }
-	//bool                IsActive() const { return !Filters.empty(); }
-
 	// [Internal]
 	ImGuiTextRange :: struct
 	{
 		b : *u8;
 		e : *u8;
-
-		//ImGuiTextRange()                                { b = e = NULL; }
-		//ImGuiTextRange(const char* _b, const char* _e)  { b = _b; e = _e; }
-		//bool            empty() const                   { return b == e; }
-		//IMGUI_API void  split(char separator, ImVector<ImGuiTextRange>* out) const;
 	}
 	
 	InputBuf : [256]u8;
@@ -901,15 +858,6 @@ ImGuiListClipper :: struct
 	StepNo : s32;
 	ItemsHeight : float;
 	StartPosY : float;
-
-	//IMGUI_API ImGuiListClipper();
-	//IMGUI_API ~ImGuiListClipper();
-
-	// items_count: Use INT_MAX if you don't know how many items you have (in which case the cursor won't be advanced in the final step)
-	// items_height: Use -1.0f to be calculated automatically on first step. Otherwise pass in the distance between your items, typically GetTextLineHeightWithSpacing() or GetFrameHeightWithSpacing().
-	//IMGUI_API void Begin(int items_count, float items_height = -1.0f);  // Automatically called by constructor if you passed 'items_count' or by Step() in Step 1.
-	//IMGUI_API void End();                                               // Automatically called on the last call of Step() that returns false.
-	//IMGUI_API bool Step();                                              // Call until it returns false. The DisplayStart/DisplayEnd fields will be set and you can process/draw those items.
 }
 
 //-----------------------------------------------------------------------------
@@ -976,14 +924,6 @@ ImDrawListSplitter :: struct
 	_Current : s32;    // Current channel number (0)
 	_Count : s32;      // Number of active channels (1+)
 	_Channels : ImVector (ImDrawChannel);   // Draw channels (not resized down so _Count might be < Channels.Size)
-
-	//inline ImDrawListSplitter()  { Clear(); }
-	//inline ~ImDrawListSplitter() { ClearFreeMemory(); }
-	//inline void                 Clear() { _Current = 0; _Count = 1; } // Do not clear Channels[] so our allocations are reused next frame
-	//IMGUI_API void              ClearFreeMemory();
-	//IMGUI_API void              Split(ImDrawList* draw_list, int count);
-	//IMGUI_API void              Merge(ImDrawList* draw_list);
-	//IMGUI_API void              SetCurrentChannel(ImDrawList* draw_list, int channel_idx);
 }
 
 ImDrawCornerFlags :: enum_flags s32
@@ -1038,129 +978,9 @@ ImDrawList :: struct
 	_Path : ImVector (ImVec2);              // [Internal] current path building
 	_CmdHeader : ImDrawCmd;         // [Internal] Template of active commands. Fields should match those of CmdBuffer.back().
 	_Splitter : ImDrawListSplitter;          // [Internal] for channels api (note: prefer using your own persistent instance of ImDrawListSplitter!)
-
-	// If you want to create ImDrawList instances, pass them ImGui::GetDrawListSharedData() or create and use your own ImDrawListSharedData (so you can use ImDrawList without ImGui)
-	//ImDrawList(const ImDrawListSharedData* shared_data) { _Data = shared_data; Flags = ImDrawListFlags_None; _VtxCurrentIdx = 0; _VtxWritePtr = NULL; _IdxWritePtr = NULL; _OwnerName = NULL; }
-
-	//~ImDrawList() { _ClearFreeMemory(); }
-	//IMGUI_API void  PushClipRect(ImVec2 clip_rect_min, ImVec2 clip_rect_max, bool intersect_with_current_clip_rect = false);  // Render-level scissoring. This is passed down to your render function but not used for CPU-side coarse clipping. Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
-	//IMGUI_API void  PushClipRectFullScreen();
-	//IMGUI_API void  PopClipRect();
-	//IMGUI_API void  PushTextureID(ImTextureID texture_id);
-	//IMGUI_API void  PopTextureID();
-	//inline ImVec2   GetClipRectMin() const { const ImVec4& cr = _ClipRectStack.back(); return ImVec2(cr.x, cr.y); }
-	//inline ImVec2   GetClipRectMax() const { const ImVec4& cr = _ClipRectStack.back(); return ImVec2(cr.z, cr.w); }
-
-	// Primitives
-	// - For rectangular primitives, "p_min" and "p_max" represent the upper-left and lower-right corners.
-	// - For circle primitives, use "num_segments == 0" to automatically calculate tessellation (preferred).
-	//   In older versions (until Dear ImGui 1.77) the AddCircle functions defaulted to num_segments == 12.
-	//   In future versions we will use textures to provide cheaper and higher-quality circles.
-	//   Use AddNgon() and AddNgonFilled() functions if you need to guaranteed a specific number of sides.
-	//IMGUI_API void  AddLine(const ImVec2& p1, const ImVec2& p2, ImU32 col, float thickness = 1.0f);
-	//IMGUI_API void  AddRect(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All, float thickness = 1.0f);   // a: upper-left, b: lower-right (== upper-left + size), rounding_corners_flags: 4 bits corresponding to which corner to round
-	//IMGUI_API void  AddRectFilled(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);                     // a: upper-left, b: lower-right (== upper-left + size)
-	//IMGUI_API void  AddRectFilledMultiColor(const ImVec2& p_min, const ImVec2& p_max, ImU32 col_upr_left, ImU32 col_upr_right, ImU32 col_bot_right, ImU32 col_bot_left);
-	//IMGUI_API void  AddQuad(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col, float thickness = 1.0f);
-	//IMGUI_API void  AddQuadFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col);
-	//IMGUI_API void  AddTriangle(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col, float thickness = 1.0f);
-	//IMGUI_API void  AddTriangleFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col);
-	//IMGUI_API void  AddCircle(const ImVec2& center, float radius, ImU32 col, int num_segments = 0, float thickness = 1.0f);
-	//IMGUI_API void  AddCircleFilled(const ImVec2& center, float radius, ImU32 col, int num_segments = 0);
-	//IMGUI_API void  AddNgon(const ImVec2& center, float radius, ImU32 col, int num_segments, float thickness = 1.0f);
-	//IMGUI_API void  AddNgonFilled(const ImVec2& center, float radius, ImU32 col, int num_segments);
-	//IMGUI_API void  AddText(const ImVec2& pos, ImU32 col, const char* text_begin, const char* text_end = NULL);
-	//IMGUI_API void  AddText(const ImFont* font, float font_size, const ImVec2& pos, ImU32 col, const char* text_begin, const char* text_end = NULL, float wrap_width = 0.0f, const ImVec4* cpu_fine_clip_rect = NULL);
-	//IMGUI_API void  AddPolyline(const ImVec2* points, int num_points, ImU32 col, bool closed, float thickness);
-	//IMGUI_API void  AddConvexPolyFilled(const ImVec2* points, int num_points, ImU32 col); // Note: Anti-aliased filling requires points to be in clockwise order.
-	//IMGUI_API void  AddBezierCurve(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col, float thickness, int num_segments = 0);
-
-	// Image primitives
-	// - Read FAQ to understand what ImTextureID is.
-	// - "p_min" and "p_max" represent the upper-left and lower-right corners of the rectangle.
-	// - "uv_min" and "uv_max" represent the normalized texture coordinates to use for those corners. Using (0,0)->(1,1) texture coordinates will generally display the entire texture.
-	//IMGUI_API void  AddImage(ImTextureID user_texture_id, const ImVec2& p_min, const ImVec2& p_max, const ImVec2& uv_min = ImVec2(0, 0), const ImVec2& uv_max = ImVec2(1, 1), ImU32 col = IM_COL32_WHITE);
-	//IMGUI_API void  AddImageQuad(ImTextureID user_texture_id, const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& uv1 = ImVec2(0, 0), const ImVec2& uv2 = ImVec2(1, 0), const ImVec2& uv3 = ImVec2(1, 1), const ImVec2& uv4 = ImVec2(0, 1), ImU32 col = IM_COL32_WHITE);
-	//IMGUI_API void  AddImageRounded(ImTextureID user_texture_id, const ImVec2& p_min, const ImVec2& p_max, const ImVec2& uv_min, const ImVec2& uv_max, ImU32 col, float rounding, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);
-
-	// Stateful path API, add points then finish with PathFillConvex() or PathStroke()
-	//inline    void  PathClear()                                                 { _Path.Size = 0; }
-	//inline    void  PathLineTo(const ImVec2& pos)                               { _Path.push_back(pos); }
-	//inline    void  PathLineToMergeDuplicate(const ImVec2& pos)                 { if (_Path.Size == 0 || memcmp(&_Path.Data[_Path.Size - 1], &pos, 8) != 0) _Path.push_back(pos); }
-	//inline    void  PathFillConvex(ImU32 col)                                   { AddConvexPolyFilled(_Path.Data, _Path.Size, col); _Path.Size = 0; }  // Note: Anti-aliased filling requires points to be in clockwise order.
-	//inline    void  PathStroke(ImU32 col, bool closed, float thickness = 1.0f)  { AddPolyline(_Path.Data, _Path.Size, col, closed, thickness); _Path.Size = 0; }
-	//IMGUI_API void  PathArcTo(const ImVec2& center, float radius, float a_min, float a_max, int num_segments = 10);
-	//IMGUI_API void  PathArcToFast(const ImVec2& center, float radius, int a_min_of_12, int a_max_of_12);                                            // Use precomputed angles for a 12 steps circle
-	//IMGUI_API void  PathBezierCurveTo(const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, int num_segments = 0);
-	//IMGUI_API void  PathRect(const ImVec2& rect_min, const ImVec2& rect_max, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);
-
-	// Advanced
-	//IMGUI_API void  AddCallback(ImDrawCallback callback, void* callback_data);  // Your rendering function must check for 'UserCallback' in ImDrawCmd and call the function instead of rendering triangles.
-	//IMGUI_API void  AddDrawCmd();                                               // This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
-	//IMGUI_API ImDrawList* CloneOutput() const;                                  // Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
-
-	// Advanced: Channels
-	// - Use to split render into layers. By switching channels to can render out-of-order (e.g. submit FG primitives before BG primitives)
-	// - Use to minimize draw calls (e.g. if going back-and-forth between multiple clipping rectangles, prefer to append into separate channels then merge at the end)
-	// - FIXME-OBSOLETE: This API shouldn't have been in ImDrawList in the first place!
-	//   Prefer using your own persistent instance of ImDrawListSplitter as you can stack them.
-	//   Using the ImDrawList::ChannelsXXXX you cannot stack a split over another.
-	//inline void     ChannelsSplit(int count)    { _Splitter.Split(this, count); }
-	//inline void     ChannelsMerge()             { _Splitter.Merge(this); }
-	//inline void     ChannelsSetCurrent(int n)   { _Splitter.SetCurrentChannel(this, n); }
-
-	// Advanced: Primitives allocations
-	// - We render triangles (three vertices)
-	// - All primitives needs to be reserved via PrimReserve() beforehand.
-	//IMGUI_API void  PrimReserve(int idx_count, int vtx_count);
-	//IMGUI_API void  PrimUnreserve(int idx_count, int vtx_count);
-	//IMGUI_API void  PrimRect(const ImVec2& a, const ImVec2& b, ImU32 col);      // Axis aligned rectangle (composed of two triangles)
-	//IMGUI_API void  PrimRectUV(const ImVec2& a, const ImVec2& b, const ImVec2& uv_a, const ImVec2& uv_b, ImU32 col);
-	//IMGUI_API void  PrimQuadUV(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& d, const ImVec2& uv_a, const ImVec2& uv_b, const ImVec2& uv_c, const ImVec2& uv_d, ImU32 col);
-	//inline    void  PrimWriteVtx(const ImVec2& pos, const ImVec2& uv, ImU32 col)    { _VtxWritePtr->pos = pos; _VtxWritePtr->uv = uv; _VtxWritePtr->col = col; _VtxWritePtr++; _VtxCurrentIdx++; }
-	//inline    void  PrimWriteIdx(ImDrawIdx idx)                                     { *_IdxWritePtr = idx; _IdxWritePtr++; }
-	//inline    void  PrimVtx(const ImVec2& pos, const ImVec2& uv, ImU32 col)         { PrimWriteIdx((ImDrawIdx)_VtxCurrentIdx); PrimWriteVtx(pos, uv, col); } // Write vertex with unique index
-
-	// [Internal helpers]
-	//IMGUI_API void  _ResetForNewFrame();
-	//IMGUI_API void  _ClearFreeMemory();
-	//IMGUI_API void  _PopUnusedDrawCmd();
-	//IMGUI_API void  _OnChangedClipRect();
-	//IMGUI_API void  _OnChangedTextureID();
-	//IMGUI_API void  _OnChangedVtxOffset();
 }
 
 ImDrawListSharedData :: struct {};
-
-/*
-// ImDrawList: Helper function to calculate a circle's segment count given its radius and a "maximum error" value.
-IM_DRAWLIST_CIRCLE_AUTO_SEGMENT_MIN :: 12;
-IM_DRAWLIST_CIRCLE_AUTO_SEGMENT_MAX :: 512;
-
-// ImDrawList: You may set this to higher values (e.g. 2 or 3) to increase tessellation of fast rounded corners path.
-IM_DRAWLIST_ARCFAST_TESSELLATION_MULTIPLIER :: 1;
-
-// Data shared between all ImDrawList instances
-// You may want to create your own instance of this if you want to use ImDrawList completely without ImGui. In that case, watch out for future changes to this structure.
-ImDrawListSharedData :: struct
-{
-	TexUivWhitePixel : ImVec2;            // UV of white pixel in the atlas
-	Font : *ImFont;                       // Current/default font (optional, for simplified AddText overload)
-	FontSize : float;                   // Current/default font size (optional, for simplified AddText overload)
-	CurveTessellationTol : float;       // Tessellation tolerance when using PathBezierCurveTo()
-	CircleSegmentMaxError : float;      // Number of circle segments to use per pixel of radius for AddCircle() etc
-	ClipRectFullscreen : ImVec4;         // Value for PushClipRectFullscreen()
-	InitialFlags : ImDrawListFlags;               // Initial flags at the beginning of the frame (it is possible to alter flags on a per-drawlist basis afterwards)
-
-	// [Internal] Lookup tables
-	ArcFastVtx : [12 * IM_DRAWLIST_ARCFAST_TESSELLATION_MULTIPLIER]ImVec2;  // FIXME: Bake rounded corners fill/borders in atlas
-	CircleSegmentCounts : [64]u8;    // Precomputed segment count for given radius (array index + 1) before we calculate it dynamically (to avoid calculation overhead)
-	TexUvLines : *ImVec4;                 // UV of anti-aliased lines in the atlas
-
-	//ImDrawListSharedData();
-	//vod SetCircleSegmentMaxError(float max_error);
-}
-*/
 
 // All draw data to render a Dear ImGui frame
 // (NB: the style and the naming convention here is a little inconsistent, we currently preserve them for backward compatibility purpose,
@@ -1175,13 +995,6 @@ ImDrawData :: struct
 	DisplayPos : ImVec2;             // Upper-left position of the viewport to render (== upper-left of the orthogonal projection matrix to use)
 	DisplaySize : ImVec2;            // Size of the viewport to render (== io.DisplaySize for the main viewport) (DisplayPos + DisplaySize == lower-right of the orthogonal projection matrix to use)
 	FramebufferScale : ImVec2;       // Amount of pixels for each unit of DisplaySize. Based on io.DisplayFramebufferScale. Generally (1,1) on normal display, (2,2) on OSX with Retina display.
-
-	// Functions
-	//ImDrawData()    { Valid = false; Clear(); }
-	//~ImDrawData()   { Clear(); }
-	//void Clear()    { Valid = false; CmdLists = NULL; CmdListsCount = TotalVtxCount = TotalIdxCount = 0; DisplayPos = DisplaySize = FramebufferScale = ImVec2(0.f, 0.f); } // The ImDrawList are owned by ImGuiContext!
-	//IMGUI_API void  DeIndexAllBuffers();                    // Helper to convert all buffers from indexed to non-indexed, in case you cannot render indexed. Note: this is slow and most likely a waste of resources. Always prefer indexed rendering!
-	//IMGUI_API void  ScaleClipRects(const ImVec2& fb_scale); // Helper to scale the ClipRect field of each ImDrawCmd. Use if your final output buffer is at a different scale than Dear ImGui expects, or if there is a difference between your window resolution and framebuffer resolution.
 }
 
 
@@ -1212,8 +1025,6 @@ ImFontConfig :: struct
 	// [Internal]
 	Name : [40]u8;               // Name (strictly to ease debugging)
 	DstFont : *ImFont;
-
-	//IMGUI_API ImFontConfig();
 }
 
 // Hold rendering data for one glyph.
@@ -1233,15 +1044,6 @@ ImFontGlyph :: struct
 ImFontGlyphRangesBuilder :: struct
 {
 	UsedChars : ImVector (u32);            // Store 1-bit per Unicode code point (0=unused, 1=used)
-
-	//ImFontGlyphRangesBuilder()              { Clear(); }
-	//inline void     Clear()                 { int size_in_bytes = (IM_UNICODE_CODEPOINT_MAX + 1) / 8; UsedChars.resize(size_in_bytes / (int)sizeof(ImU32)); memset(UsedChars.Data, 0, (size_t)size_in_bytes); }
-	//inline bool     GetBit(size_t n) const  { int off = (int)(n >> 5); ImU32 mask = 1u << (n & 31); return (UsedChars[off] & mask) != 0; }  // Get bit n in the array
-	//inline void     SetBit(size_t n)        { int off = (int)(n >> 5); ImU32 mask = 1u << (n & 31); UsedChars[off] |= mask; }               // Set bit n in the array
-	//inline void     AddChar(ImWchar c)      { SetBit(c); }                      // Add character
-	//IMGUI_API void  AddText(const char* text, const char* text_end = NULL);     // Add string (each character of the UTF-8 string are added)
-	//IMGUI_API void  AddRanges(const ImWchar* ranges);                           // Add ranges, e.g. builder.AddRanges(ImFontAtlas::GetGlyphRangesDefault()) to force add all of ASCII/Latin+Ext
-	//IMGUI_API void  BuildRanges(ImVector<ImWchar>* out_ranges);                 // Output new ranges
 }
 
 // See ImFontAtlas::AddCustomRectXXX functions.
@@ -1253,8 +1055,6 @@ ImFontAtlasCustomRect :: struct
 	GlyphAdvanceX : float;  // Input    // For custom font glyphs only: glyph xadvance
 	GlyphOffset : ImVec2;    // Input    // For custom font glyphs only: glyph display offset
 	Font : *ImFont;           // Input    // For custom font glyphs only: target font
-	//ImFontAtlasCustomRect()         { Width = Height = 0; X = Y = 0xFFFF; GlyphID = 0; GlyphAdvanceX = 0.0f; GlyphOffset = ImVec2(0, 0); Font = NULL; }
-	//bool IsPacked() const           { return X != 0xFFFF; }
 }
 
 // Flags for ImFontAtlas build
@@ -1285,64 +1085,6 @@ ImFontAtlasFlags :: enum_flags s32
 // - This is an old API and it is currently awkward for those and and various other reasons! We will address them in the future!
 ImFontAtlas :: struct
 {
-	//IMGUI_API ImFontAtlas();
-	//IMGUI_API ~ImFontAtlas();
-	//IMGUI_API ImFont*           AddFont(const ImFontConfig* font_cfg);
-	//IMGUI_API ImFont*           AddFontDefault(const ImFontConfig* font_cfg = NULL);
-	//IMGUI_API ImFont*           AddFontFromFileTTF(const char* filename, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);
-	//IMGUI_API ImFont*           AddFontFromMemoryTTF(void* font_data, int font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
-	//IMGUI_API ImFont*           AddFontFromMemoryCompressedTTF(const void* compressed_font_data, int compressed_font_size, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL); // 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
-	//IMGUI_API ImFont*           AddFontFromMemoryCompressedBase85TTF(const char* compressed_font_data_base85, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);              // 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
-	//IMGUI_API void              ClearInputData();           // Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
-	//IMGUI_API void              ClearTexData();             // Clear output texture data (CPU side). Saves RAM once the texture has been copied to graphics memory.
-	//IMGUI_API void              ClearFonts();               // Clear output font data (glyphs storage, UV coordinates).
-	//IMGUI_API void              Clear();                    // Clear all input and output.
-
-	// Build atlas, retrieve pixel data.
-	// User is in charge of copying the pixels into graphics memory (e.g. create a texture with your engine). Then store your texture handle with SetTexID().
-	// The pitch is always = Width * BytesPerPixels (1 or 4)
-	// Building in RGBA32 format is provided for convenience and compatibility, but note that unless you manually manipulate or copy color data into
-	// the texture (e.g. when using the AddCustomRect*** api), then the RGB pixels emitted will always be white (~75% of memory/bandwidth waste.
-	//IMGUI_API bool              Build();                    // Build pixels data. This is called automatically for you by the GetTexData*** functions.
-	//IMGUI_API void              GetTexDataAsAlpha8(unsigned char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel = NULL);  // 1 byte per-pixel
-	//IMGUI_API void              GetTexDataAsRGBA32(unsigned char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel = NULL);  // 4 bytes-per-pixel
-	//bool                        IsBuilt() const             { return Fonts.Size > 0 && (TexPixelsAlpha8 != NULL || TexPixelsRGBA32 != NULL); }
-	//void                        SetTexID(ImTextureID id)    { TexID = id; }
-
-	//-------------------------------------------
-	// Glyph Ranges
-	//-------------------------------------------
-
-	// Helpers to retrieve list of common Unicode ranges (2 value per range, values are inclusive, zero-terminated list)
-	// NB: Make sure that your string are UTF-8 and NOT in your local code page. In C++11, you can create UTF-8 string literal using the u8"Hello world" syntax. See FAQ for details.
-	// NB: Consider using ImFontGlyphRangesBuilder to build glyph ranges from textual data.
-	//IMGUI_API const ImWchar*    GetGlyphRangesDefault();                // Basic Latin, Extended Latin
-	//IMGUI_API const ImWchar*    GetGlyphRangesKorean();                 // Default + Korean characters
-	//IMGUI_API const ImWchar*    GetGlyphRangesJapanese();               // Default + Hiragana, Katakana, Half-Width, Selection of 1946 Ideographs
-	//IMGUI_API const ImWchar*    GetGlyphRangesChineseFull();            // Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
-	//IMGUI_API const ImWchar*    GetGlyphRangesChineseSimplifiedCommon();// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
-	//IMGUI_API const ImWchar*    GetGlyphRangesCyrillic();               // Default + about 400 Cyrillic characters
-	//IMGUI_API const ImWchar*    GetGlyphRangesThai();                   // Default + Thai characters
-	//IMGUI_API const ImWchar*    GetGlyphRangesVietnamese();             // Default + Vietnamese characters
-
-	//-------------------------------------------
-	// [BETA] Custom Rectangles/Glyphs API
-	//-------------------------------------------
-
-	// You can request arbitrary rectangles to be packed into the atlas, for your own purposes.
-	// After calling Build(), you can query the rectangle position and render your pixels.
-	// You can also request your rectangles to be mapped as font glyph (given a font + Unicode point),
-	// so you can render e.g. custom colorful icons and use them as regular glyphs.
-	// Read docs/FONTS.md for more details about using colorful icons.
-	// Note: this API may be redesigned later in order to support multi-monitor varying DPI settings.
-	//IMGUI_API int               AddCustomRectRegular(int width, int height);
-	//IMGUI_API int               AddCustomRectFontGlyph(ImFont* font, ImWchar id, int width, int height, float advance_x, const ImVec2& offset = ImVec2(0, 0));
-	//ImFontAtlasCustomRect*      GetCustomRectByIndex(int index) { IM_ASSERT(index >= 0); return &CustomRects[index]; }
-
-	// [Internal]
-	//IMGUI_API void              CalcCustomRectUV(const ImFontAtlasCustomRect* rect, ImVec2* out_uv_min, ImVec2* out_uv_max) const;
-	//IMGUI_API bool              GetMouseCursorTexData(ImGuiMouseCursor cursor, ImVec2* out_offset, ImVec2* out_size, ImVec2 out_uv_border[2], ImVec2 out_uv_fill[2]);
-
 	//-------------------------------------------
 	// Members
 	//-------------------------------------------
@@ -1396,30 +1138,4 @@ ImFont :: struct
 	Ascent, Descent : float;    // 4+4   // out //            // Ascent: distance from top to bottom of e.g. 'A' [0..FontSize]
 	MetricsTotalSurface : s32;// 4     // out //            // Total surface in pixels to get an idea of the font rasterization/texture cost (not exact, we approximate the cost of padding between glyphs)
 	Used4kPagesMap : [(IM_UNICODE_CODEPOINT_MAX+1)/4096/8]u8; // 2 bytes if ImWchar=ImWchar16, 34 bytes if ImWchar==ImWchar32. Store 1-bit for each block of 4K codepoints that has one active glyph. This is mainly used to facilitate iterations across all used codepoints.
-
-	// Methods
-	//IMGUI_API ImFont();
-	//IMGUI_API ~ImFont();
-	//IMGUI_API const ImFontGlyph*FindGlyph(ImWchar c) const;
-	//IMGUI_API const ImFontGlyph*FindGlyphNoFallback(ImWchar c) const;
-	//float                       GetCharAdvance(ImWchar c) const     { return ((int)c < IndexAdvanceX.Size) ? IndexAdvanceX[(int)c] : FallbackAdvanceX; }
-	//bool                        IsLoaded() const                    { return ContainerAtlas != NULL; }
-	//const char*                 GetDebugName() const                { return ConfigData ? ConfigData->Name : "<unknown>"; }
-
-	// 'max_width' stops rendering after a certain width (could be turned into a 2d size). FLT_MAX to disable.
-	// 'wrap_width' enable automatic word-wrapping across multiple lines to fit into given width. 0.0f to disable.
-	//IMGUI_API ImVec2            CalcTextSizeA(float size, float max_width, float wrap_width, const char* text_begin, const char* text_end = NULL, const char** remaining = NULL) const; // utf8
-	//IMGUI_API const char*       CalcWordWrapPositionA(float scale, const char* text, const char* text_end, float wrap_width) const;
-	//IMGUI_API void              RenderChar(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col, ImWchar c) const;
-	//IMGUI_API void              RenderText(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col, const ImVec4& clip_rect, const char* text_begin, const char* text_end, float wrap_width = 0.0f, bool cpu_fine_clip = false) const;
-
-	// [Internal] Don't use!
-	//IMGUI_API void              BuildLookupTable();
-	//IMGUI_API void              ClearOutputData();
-	//IMGUI_API void              GrowIndex(int new_size);
-	//IMGUI_API void              AddGlyph(const ImFontConfig* src_cfg, ImWchar c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x);
-	//IMGUI_API void              AddRemapChar(ImWchar dst, ImWchar src, bool overwrite_dst = true); // Makes 'dst' character/glyph points to 'src' character/glyph. Currently needs to be called AFTER fonts have been built.
-	//IMGUI_API void              SetGlyphVisible(ImWchar c, bool visible);
-	//IMGUI_API void              SetFallbackChar(ImWchar c);
-	//IMGUI_API bool              IsGlyphRangeUnused(unsigned int c_begin, unsigned int c_last);
 }
