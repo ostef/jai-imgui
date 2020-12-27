@@ -20,6 +20,9 @@ We try to make using the library in Jai as close as possible as using it in C++:
 * Until better namespacing gets added to the language, we prefix `ImGui::` functions with `ImGui_` and member functions with their enclosing struct name (for example `ImGuiIO_AddInputCharactersUTF8`). This is done so that we can have struct definitions in `module.jai`, which is platform independant, and bindings in `windows.jai`.
 * Jai does not have references, so procedures that expect a `const &` parameter are wrapped by a by-value parameter version so that using the API in Jai feels close to using it in C++. Non-const references in C++ translate to pointers in Jai and remain unchanged.
 
+## Documentation
+Comments are kept so that the Jai wrapper suffices to get documentation about the API.
+
 ## Version
 This library uses version [1.79](https://github.com/ocornut/imgui/releases/tag/v1.79) (the latest as of December 27 2020) of **Dear ImGui**. Docking might be added in the future.
 
