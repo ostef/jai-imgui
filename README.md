@@ -23,7 +23,7 @@ We try to make using the library in Jai as close as possible as using it in C++:
 ## Version
 This library uses version [1.79](https://github.com/ocornut/imgui/releases/tag/v1.79) (the latest as of December 27 2020) of **Dear ImGui**. Docking might be added in the future.
 
-Only things in `imgui.h` have been ported, and obsolete procedures are not included and disabled in the `imgui_config.h` file.
+Only things in `imgui.h` have been ported, and obsolete procedures are not included and disabled in the `imconfig.h` file.
 
 ## Examples
 The examples are still being written and will be available here in an examples directory.
