@@ -517,7 +517,7 @@ ImGui_BeginMainMenuBar :: () -> bool #foreign imgui "?BeginMainMenuBar@ImGui@@YA
 // only call EndMainMenuBar() if BeginMainMenuBar() returns true!
 ImGui_EndMainMenuBar :: () #foreign imgui "?EndMainMenuBar@ImGui@@YAXXZ";
 // create a sub-menu entry. only call EndMenu() if this returns true!
-ImGui_BeginMenu :: (label : *u8, enabled : bool = false) -> bool #foreign imgui "?BeginMenu@ImGui@@YA_NPEBD_N@Z";
+ImGui_BeginMenu :: (label : *u8, enabled : bool = true) -> bool #foreign imgui "?BeginMenu@ImGui@@YA_NPEBD_N@Z";
 // only call EndMenu() if BeginMenu() returns true!
 ImGui_EndMenu :: () #foreign imgui "?EndMenu@ImGui@@YAXXZ";
 // return true when activated. shortcuts are displayed for convenience but not processed by ImGui at the moment
