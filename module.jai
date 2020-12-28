@@ -23,8 +23,8 @@ ImGui_CheckVersion :: () #expand
 
 ImTextureID :: *void;
 ImGuiID     :: u32;
-ImGuiInputTextCallback :: #type (data : *ImGuiInputTextCallbackData) -> s32;
-ImGuiSizeCallback      :: #type (data : *ImGuiSizeCallbackData) -> void;
+ImGuiInputTextCallback :: #type (data : *ImGuiInputTextCallbackData) -> s32 #c_call;
+ImGuiSizeCallback      :: #type (data : *ImGuiSizeCallbackData) -> void #c_call;
 ImVec2 :: Vec2;
 ImVec4 :: Vec4;
 ImWchar :: u16;
