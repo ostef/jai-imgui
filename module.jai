@@ -1,4 +1,4 @@
-#module_parameters (IMPORT_DEBUG_SYMBOLS := true);
+#module_parameters (IMPORT_DEBUG_SYMBOLS := true, STATIC_LINKING := true);
 
 #scope_file
 

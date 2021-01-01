@@ -6,8 +6,6 @@
 
 An **ImGui** module is provided with the Jai compiler at the moment but it uses version 1.58 and is incomplete.
 
-The library currently uses a **dll**, which is not necessarily the best choice so we'll eventually change it to link statically if possible. 
-
 ## Supported platforms
 Currently, only Windows is supported.
 

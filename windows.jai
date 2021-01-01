@@ -1155,5 +1155,13 @@ ImFont__RenderText :: (this : *ImFont, draw_list : *ImDrawList, size : float, po
 
 #scope_file
 
-#if IMPORT_DEBUG_SYMBOLS  imgui :: #foreign_library "win_debug/ImGui";
-else                      imgui :: #foreign_library "win/ImGui";
+#if STATIC_LINKING
+{
+	#if IMPORT_DEBUG_SYMBOLS  imgui :: #foreign_library, no_dll "win_debug/ImGui";
+	else                      imgui :: #foreign_library, no_dll "win/ImGui";
+}
+else
+{
+	#if IMPORT_DEBUG_SYMBOLS  imgui :: #foreign_library "win_debug/ImGui";
+	else                      imgui :: #foreign_library "win/ImGui";
+}
