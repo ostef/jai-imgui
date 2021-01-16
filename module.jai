@@ -1,13 +1,9 @@
 #module_parameters (IMPORT_DEBUG_SYMBOLS := true, STATIC_LINKING := true);
 
-#scope_file
-
-#import "Linalg";
-
 #scope_module
 
 #import "Basic";
-Math :: #import "Math";
+#import "Math";
 
 #scope_export
 
@@ -25,12 +21,16 @@ ImTextureID :: *void;
 ImGuiID     :: u32;
 ImGuiInputTextCallback :: #type (data : *ImGuiInputTextCallbackData) -> s32 #c_call;
 ImGuiSizeCallback      :: #type (data : *ImGuiSizeCallbackData) -> void #c_call;
-ImVec2 :: Vec2;
-ImVec4 :: Vec4;
+ImVec2 :: Vector2;
+ImVec4 :: Vector4;
 ImWchar :: u16;
 
 ImGuiContext :: struct {};
 ImGuiStorage :: struct {};
+
+IM_COL32_WHITE       :: 0xffffffff;
+IM_COL32_BLACK       :: 0x000000ff;
+IM_COL32_BLACK_TRANS :: 0x00000000;
 
 //-----------------------------------------------------------------------------
 // Flags & Enumerations
